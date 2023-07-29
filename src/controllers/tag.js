@@ -1,9 +1,13 @@
 import { controllerWrapper } from "../helpers/controllerWrapper.js";
 import { Tag } from "../models/tag.js";
+import { createService } from "../serviceControllers/serviceControllers.js";
 
-const createTag = async (req, res) => {
-  const tag = await Tag.create(req.body);
-  res.status(201).json(tag);
+// const createTag = async (req, res) => {
+//   const tag = await Tag.create(req.body);
+//   res.status(201).json(tag);
+// };
+const createTag = (req, res) => {
+  createService(Tag, req, res);
 };
 
 const getAllByUserId = async (req, res) => {

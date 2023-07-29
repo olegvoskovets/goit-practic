@@ -25,7 +25,19 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message });
 });
 
-app.listen(envConfigs.port, async () => {
-  await mongoose.connect(envConfigs.mongoURL);
-  console.log(`Server working on port ${envConfigs.port}`);
-});
+// app.listen(envConfigs.port, async () => {
+//   await mongoose.connect(envConfigs.mongoURL);
+//   console.log(`Server working on port ${envConfigs.port}`);
+// });
+mongoose
+  .connect(envConfigs.mongoURL)
+  .then(() => {
+    console.log("Database connection successful");
+    app.listen(envConfigs.port, () => {
+      console.log("Server running. Use our API on port: " + envConfigs.port);
+    });
+  })
+  .catch((error) => {
+    console.log(error.message);
+    process.exit(1);
+  });
